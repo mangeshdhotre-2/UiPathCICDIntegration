@@ -20,7 +20,7 @@ pipeline {
         stage('Build UiPath Package') {
             steps {
                 script {
-                    bat 'C:\\Program Files\\UiPath\\Studio\\UiPath.CommandLine.exe pack "C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\project.json" -o "C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\Output"'
+                    bat 'C:\\Users\\Admin\\AppData\\Local\\Programs\\UiPath\\Studio\\UiPath.Studio.CommandLine.exe pack "C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\project.json" -o "C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\Output"'
                 }
             }
         }
