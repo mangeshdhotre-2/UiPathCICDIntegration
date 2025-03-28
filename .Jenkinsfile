@@ -1,4 +1,4 @@
-﻿groovy
+groovy
 CopyEdit
 pipeline {
     agent any
