@@ -1,5 +1,3 @@
-groovy
-CopyEdit
 pipeline {
     agent any
 
