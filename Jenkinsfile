@@ -33,8 +33,8 @@ pipeline {
                     def authResponse = httpRequest(
                         url: "https://account.uipath.com/oauth/token",
                         httpMode: 'POST',
-                        contentType: 'application/x-www-form-urlencoded',
                          customHeaders: [
+                             [name: 'Content-Type', value: 'application/x-www-form-urlencoded'],
                             [name: 'X-UIPATH-TenantName', value: 'DefaultTenant']
                              ],
                         requestBody: "grant_type=refresh_token&client_id=${CLIENT_ID}&refresh_token=${USER_KEY}"
