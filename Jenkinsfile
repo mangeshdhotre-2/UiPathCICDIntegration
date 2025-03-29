@@ -39,16 +39,15 @@ pipeline {
                              ],
                         requestBody: "grant_type=refresh_token&client_id=${CLIENT_ID}&refresh_token=${USER_KEY}"
                     )
-
-                    def token = readJSON(text: authResponse.content).access_token
                     echo "Token Created"
+                    def token = readJSON(text: authResponse.content).access_token
+                    echo "Token:${token}"
                     def uploadResponse = httpRequest(
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
-                        contentType: 'MULTIPART_FORM_DATA',
-                        customHeaders: [[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
+                        customHeaders: [ [name: 'Content-Type', value: 'application/x-www-form-urlencoded'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
                         multipartName: 'file',
-                        uploadFile: 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\UiPathDemo_main\\Output\\UiPath_CICD_Integration.*.nupkg'
+                        uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.6.nupkg'
                     )
 
                     echo "Package Uploaded: ${uploadResponse.content}"
