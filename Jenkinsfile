@@ -35,7 +35,9 @@ pipeline {
                         url: "https://account.uipath.com/oauth/token",
                         httpMode: 'POST',
                         contentType: 'application/json',
-                        X-UIPATH-TenantName:'DefaultTenant',
+                         customHeaders: [
+                            [name: 'X-UIPATH-TenantName', value: 'DefaultTenant']
+                             ],
                         requestBody: "grant_type=refresh_token&client_id=${CLIENT_ID}&refresh_token=${USER_KEY}"
                     )
 
@@ -45,7 +47,9 @@ pipeline {
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
                         contentType: 'MULTIPART_FORM_DATA',
-                        customHeaders: [[name: 'Authorization', value: "Bearer ${token}"]],
+                        customHeaders: [[name: 'Authorization', value: "Bearer ${token}"], customHeaders: [
+        [name: 'X-UIPATH-OrganizationUnitId', value: '6269096']
+    ]],
                         X-UIPATH-OrganizationUnitId:6269096,
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\UiPathDemo_main\\Output\\UiPath_CICD_Integration.*.nupkg'
