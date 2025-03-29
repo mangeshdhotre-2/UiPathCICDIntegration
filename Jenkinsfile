@@ -22,7 +22,7 @@ pipeline {
         stage('Build UiPath Package') {
             steps {
                 script {
-                    bat "\"C:\\Users\\Admin\\AppData\\Local\\Programs\\UiPath\\Studio\\UiPath.Studio.CommandLine.exe\" publish \"C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\project.json\" - \"C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\Output\""
+                    bat "\"C:\\Users\\Admin\\AppData\\Local\\Programs\\UiPath\\Studio\\UiPath.Studio.CommandLine.exe\" publish \"C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\project.json\" -g \"C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\Output\""
 
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
                     )
 
                     def token = readJSON(text: authResponse.content).access_token
-
+                    echo "Token Created"
                     def uploadResponse = httpRequest(
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
