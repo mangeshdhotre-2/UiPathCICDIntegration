@@ -47,10 +47,7 @@ pipeline {
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
                         contentType: 'MULTIPART_FORM_DATA',
-                        customHeaders: [[name: 'Authorization', value: "Bearer ${token}"], customHeaders: [
-        [name: 'X-UIPATH-OrganizationUnitId', value: '6269096']
-    ]],
-                        X-UIPATH-OrganizationUnitId:6269096,
+                        customHeaders: [[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\UiPathDemo_main\\Output\\UiPath_CICD_Integration.*.nupkg'
                     )
