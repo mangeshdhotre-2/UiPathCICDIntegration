@@ -33,7 +33,7 @@ pipeline {
                     def authResponse = httpRequest(
                         url: "https://account.uipath.com/oauth/token",
                         httpMode: 'POST',
-                        contentType: 'application/json',
+                        contentType: 'APPLICATION_FORM',
                          customHeaders: [
                             [name: 'X-UIPATH-TenantName', value: 'DefaultTenant']
                              ],
