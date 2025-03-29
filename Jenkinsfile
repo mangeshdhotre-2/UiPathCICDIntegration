@@ -40,7 +40,8 @@ pipeline {
                         requestBody: "grant_type=refresh_token&client_id=${CLIENT_ID}&refresh_token=${USER_KEY}"
                     )
                     echo "Token Created"
-                    def token = readJSON(text: authResponse.content).access_token
+                    def jsonResponse = new JsonSlurper().parseText(authResponse.content)  // FIXED
+                    def token = jsonResponse.access_token
                     echo "Token:${token}"
                     def uploadResponse = httpRequest(
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
