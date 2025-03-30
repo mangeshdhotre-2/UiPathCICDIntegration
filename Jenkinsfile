@@ -47,11 +47,19 @@ pipeline {
                     def uploadResponse = httpRequest(
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
-                        customHeaders: [ [name: 'accept', value: 'multipart/form-data'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
+                        customHeaders: [ [name: 'Accept', value: 'application/json'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
+                        multipart:true
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                    echo "Package Uploaded"
+                    
+                    if (uploadResponse.status < 200 || uploadResponse.status >= 300) {
+                       echo "Upload failed! HTTP Status: ${uploadResponse.status}"
+                       echo "Response: ${uploadResponse.content}"
+                       error("Stopping pipeline due to upload failure.")
+                    } else {
+                      echo "Upload successful! Response: ${uploadResponse.content}"
+                    }
                 }
             }
         }
