@@ -54,7 +54,7 @@ pipeline {
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                    def updateduploadResponse = new JsonSlurper().parseText(uploadResponse.content) 
+                    def updateduploadResponse = readJSON(text: uploadResponse.content) 
                     echo "Response:${updateduploadResponse}"
                     if (updateduploadResponse.status < 200 || updateduploadResponse.status >= 300) {
                        echo "Upload failed! HTTP Status: ${updateduploadResponse.status}"
