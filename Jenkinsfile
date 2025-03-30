@@ -49,10 +49,9 @@ pipeline {
                         httpMode: 'POST',
                         customHeaders: [ [name: 'Content-Type', value: 'application/x-www-form-urlencoded'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
                         multipartName: 'file',
-                        uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.6.nupkg'
+                        uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.5.nupkg'
                     )
-                    echo "Response:${uploadResponse}"
-                    echo "Package Uploaded: ${uploadResponse.content}"
+                    echo "Package Uploaded"
                 }
             }
         }
