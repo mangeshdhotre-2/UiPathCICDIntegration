@@ -54,9 +54,9 @@ pipeline {
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                     def responseJson = new JsonSlurperClassic().parseText(uploadResponse.content)
+                     def responseJson = new JsonSlurper().parseText(uploadResponse.content)
     
-                    // Check if package already exists
+                    
                      if (responseJson.errorCode == 409) {
                         echo "🚨 Package already exists. Skipping upload."
                      } else {
