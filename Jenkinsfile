@@ -48,7 +48,7 @@ pipeline {
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
                         customHeaders: [ [name: 'Accept', value: 'application/json'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
-                        multipart:true
+                        multipart:true,
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
