@@ -54,15 +54,14 @@ pipeline {
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                    def updateduploadResponse = readJSON(text: uploadResponse.content) 
-                    echo "Response:${updateduploadResponse}"
-                    if (updateduploadResponse.status < 200 || updateduploadResponse.status >= 300) {
-                       echo "Upload failed! HTTP Status: ${updateduploadResponse.status}"
-                       echo "Response: ${updateduploadResponse.content}"
-                       error("Stopping pipeline due to upload failure.")
-                    } else {
-                      echo "Upload successful! Response: ${updateduploadResponse.content}"
-                    }
+                     def responseJson = new JsonSlurperClassic().parseText(uploadResponse.content)
+    
+                    // Check if package already exists
+                     if (responseJson.errorCode == 409) {
+                        echo "🚨 Package already exists. Skipping upload."
+                     } else {
+                        echo "✅ Package uploaded successfully: ${uploadResponse.content}"
+                     }
                 }
             }
         }
