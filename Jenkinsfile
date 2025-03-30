@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 pipeline {
     agent any
 
@@ -56,13 +57,14 @@ pipeline {
                     )
                      echo "Response:${uploadResponse}"
                     
-                     def responseJson = new JsonSlurper().parseText(uploadResponse.content)
-                     echo "API Response:${responseJson.message}"
+                     def responseJson = new JsonSlurperClassic().parseText(response.content)
+                     def responseMap = [:]  // Initialize an empty HashMap
+                     responseJson.each { key, value -> responseMap[key] = value }  // Copy data
                     
-                     if (responseJson.errorCode == 1004) {
+                     if (responseMap.errorCode == 1004) {
                         echo "🚨 Package already exists. Skipping upload."
                      } else {
-                        echo "✅ Package uploaded successfully: ${uploadResponse.content}"
+                        echo "✅ Package uploaded successfully: ${responseMap}"
                      }
                 }
             }
