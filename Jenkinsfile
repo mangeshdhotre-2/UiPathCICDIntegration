@@ -47,9 +47,9 @@ pipeline {
                     def uploadResponse = httpRequest(
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
-                        customHeaders: [ [name: 'Content-Type', value: 'application/x-www-form-urlencoded'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
+                        customHeaders: [ [name: 'accept', value: 'multipart/form-data'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
                         multipartName: 'file',
-                        uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.5.nupkg'
+                        uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
                     echo "Package Uploaded"
                 }
