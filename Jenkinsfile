@@ -48,17 +48,17 @@ pipeline {
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
                         customHeaders: [ [name: 'Accept', value: 'application/json'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
-                        multipart:true,
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                    
-                    if (uploadResponse.status < 200 || uploadResponse.status >= 300) {
-                       echo "Upload failed! HTTP Status: ${uploadResponse.status}"
-                       echo "Response: ${uploadResponse.content}"
+                    def updateduploadResponse = new JsonSlurper().parseText(uploadResponse.content) 
+                    echo "Response:${updateduploadResponse}"
+                    if (updateduploadResponse.status < 200 || updateduploadResponse.status >= 300) {
+                       echo "Upload failed! HTTP Status: ${updateduploadResponse.status}"
+                       echo "Response: ${updateduploadResponse.content}"
                        error("Stopping pipeline due to upload failure.")
                     } else {
-                      echo "Upload successful! Response: ${uploadResponse.content}"
+                      echo "Upload successful! Response: ${updateduploadResponse.content}"
                     }
                 }
             }
