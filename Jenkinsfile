@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        ORCHESTRATOR_URL = 'https://cloud.uipath.com/ltimileeikdf/DefaultTenant/orchestrator_/'
+        ORCHESTRATOR_URL = 'https://cloud.uipath.com/ltimileeikdf/DefaultTenant/orchestrator_'
         TENANT_NAME = 'DefaultTenant'
         CLIENT_ID = '8DEv1AMNXczW3y4U15LL3jYf62jK93n5'
         USER_KEY = 'I4s7rahv-OsO28bnLWdVV5sAekXibC4w-veW6Lveq5lqY'
@@ -47,7 +47,10 @@ pipeline {
                     def uploadResponse = httpRequest(
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
-                        customHeaders: [ [name: 'accept', value: 'multipart/form-data'],[name: 'Authorization', value: "Bearer ${token}"],[name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
+                        customHeaders: [ 
+                            [name: 'Content-Type', value: 'application/x-www-form-urlencoded'],
+                            [name: 'Authorization', value: "Bearer ${token}"],
+                            [name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
