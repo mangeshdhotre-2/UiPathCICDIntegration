@@ -54,10 +54,12 @@ pipeline {
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                     def responseJson = new JsonSlurper().parseText(uploadResponse.content)
-    
+                     echo "Response:${uploadResponse}"
                     
-                     if (responseJson.errorCode == 409) {
+                     def responseJson = new JsonSlurper().parseText(uploadResponse.content)
+                     echo "API Response:${responseJson.message}"
+                    
+                     if (responseJson.errorCode == 1004) {
                         echo "🚨 Package already exists. Skipping upload."
                      } else {
                         echo "✅ Package uploaded successfully: ${uploadResponse.content}"
