@@ -66,41 +66,7 @@ pipeline {
             }
         }
 
-        stage('Create New Process Version') {
-            steps {
-                script {
-                    def releaseResponse = httpRequest(
-                        url: "${ORCHESTRATOR_URL}/odata/Releases",
-                        httpMode: 'GET',
-                        customHeaders: [[name: 'Content-Type', value: 'application/x-www-form-urlencoded'],[name: 'Authorization', value: "Bearer ${token}"]],
-                     
-                    )
-
-                    def jsonResponse = new JsonSlurper().parseText(authResponse.content)
-
-                    echo "API Response: ${jsonResponse}"  // Debugging step
-                    def releasesList = jsonResponse.value ?: jsonResponse  // Handle cases with or without 'value'
-
-                    def release = releasesList.find { it.ProcessKey == env.PROCESS_NAME }
-
-                    if (release) {
-                       def releaseId = release.Id
-                       echo "Found Release ID: ${releaseId}"
-                    } else {
-                       error "No release found for ProcessKey: ${env.PROCESS_NAME}"
-                     }
-
-                    def updateResponse = httpRequest(
-                        url: "${ORCHESTRATOR_URL}/odata/Releases(${releaseId})",
-                        httpMode: 'PATCH',
-                        customHeaders: [[name: 'Content-Type', value: 'application/x-www-form-urlencoded'],[name: 'Authorization', value: "Bearer ${token}"]],              
-                        requestBody: '{"InputArguments": "{}"}'
-                    )
-
-                    echo "Process Updated: ${updateResponse.content}"
-                }
-            }
-        }
+        
     }
 }
 
