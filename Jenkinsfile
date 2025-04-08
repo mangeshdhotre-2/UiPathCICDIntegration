@@ -56,10 +56,10 @@ pipeline {
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.32.nupkg'
                     )
-                    def statusCode = uploadResponse.status
-                    def content = uploadResponse.content?.toString()
+                    def json = new groovy.json.JsonSlurper().parseText(uploadResponse)
+                  def serializableMap = new HashMap<>(json) 
 
-                    echo "Upload Status: ${statusCode}"
+                    echo "Upload Status"
                     
 
                    
