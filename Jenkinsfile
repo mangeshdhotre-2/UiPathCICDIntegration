@@ -57,15 +57,24 @@ pipeline {
                     )
                      echo "Response:${uploadResponse}"
                     
-                     def responseJson = new JsonSlurperClassic().parseText(response.content)
-                     def responseMap = [:]  // Initialize an empty HashMap
-                     responseJson.each { key, value -> responseMap[key] = value }  // Copy data
-                    
-                     if (responseMap.errorCode == 1004) {
-                        echo "🚨 Package already exists. Skipping upload."
-                     } else {
-                        echo "✅ Package uploaded successfully: ${responseMap}"
-                     }
+                     @NonCPS
+                     def toSerializableMap(inputMap) {
+                         def serializableMap = [:]
+                         inputMap.each { key, value ->
+                              serializableMap[key.toString()] = value instanceof Map ? toSerializableMap(value) : value
+                           }
+                           return serializableMap
+                        }
+
+                    def responseJson = new JsonSlurperClassic().parseText(response.content)
+                    def responseMap = toSerializableMap(responseJson)  // Now it's safe to use
+
+                    if (responseMap.errorCode == 1004) {
+                       echo "🚨 Package already exists. Skipping upload."
+                    } else {
+                       echo "✅ Package uploaded successfully: ${responseMap}"
+                    }
+
                 }
             }
         }
