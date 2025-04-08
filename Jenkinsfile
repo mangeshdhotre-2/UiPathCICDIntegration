@@ -58,16 +58,16 @@ pipeline {
                      echo "Response:${uploadResponse}"
                     
                     
-                     def toSerializableMap(inputMap) {
+                     
+                    def responseJson = new JsonSlurperClassic().parseText(response.content)
+                    def responseMap = toSerializableMap(responseJson)  // Now it's safe to use
+                    def toSerializableMap(inputMap) {
                          def serializableMap = [:]
                          inputMap.each { key, value ->
                               serializableMap[key.toString()] = value instanceof Map ? toSerializableMap(value) : value
                            }
                            return serializableMap
                         }
-
-                    def responseJson = new JsonSlurperClassic().parseText(response.content)
-                    def responseMap = toSerializableMap(responseJson)  // Now it's safe to use
 
                     if (responseMap.errorCode == 1004) {
                        echo "🚨 Package already exists. Skipping upload."
