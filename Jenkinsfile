@@ -49,7 +49,7 @@ pipeline {
                         url: "${ORCHESTRATOR_URL}/odata/Processes/UiPath.Server.Configuration.OData.UploadPackage",
                         httpMode: 'POST',
                         customHeaders: [ 
-                            [name: 'Content-Type', value: 'application/x-www-form-urlencoded'],
+                            [name: 'Content-Type', value: 'multipart/form-data'],
                             [name: 'Authorization', value: "Bearer ${token}"],
                             [name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
                         multipartName: 'file',
