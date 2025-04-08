@@ -55,7 +55,8 @@ pipeline {
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                     echo "📦 Raw Response: ${uploadResponse.content}"
+                    echo "Uploaded"
+                     echo "Raw Response: ${uploadResponse.content}"
                     
 
                    
