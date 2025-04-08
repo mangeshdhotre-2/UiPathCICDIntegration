@@ -57,7 +57,7 @@ pipeline {
                     )
                      echo "Response:${uploadResponse}"
                     
-                     @NonCPS
+                    
                      def toSerializableMap(inputMap) {
                          def serializableMap = [:]
                          inputMap.each { key, value ->
