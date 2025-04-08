@@ -54,8 +54,8 @@ pipeline {
                         multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
-                    def statusCode = response.status
-                    def content = response.content?.toString()
+                    def statusCode = uploadResponse.status
+                    def content = uploadResponse.content?.toString()
 
                     echo "Upload Status: ${statusCode}"
                     
