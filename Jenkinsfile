@@ -53,7 +53,6 @@ pipeline {
                             [name: 'Content-Type', value: 'multipart/form-data'],
                             [name: 'Authorization', value: "Bearer ${token}"],
                             [name: 'X-UIPATH-OrganizationUnitId', value: '6269096']],
-                        multipartName: 'file',
                         uploadFile: 'C:\\ProgramData\\UiPath\\Packages\\UiPath_CICD_Integration.1.0.12.nupkg'
                     )
                     def statusCode = uploadResponse.status
