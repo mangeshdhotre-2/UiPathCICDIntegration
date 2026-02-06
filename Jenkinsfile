@@ -22,7 +22,7 @@ pipeline {
         stage('Build UiPath Package') {
             steps {
                 script {
-                    bat "\"C:\\Users\\Admin\\AppData\\Local\\Programs\\UiPathPlatform\\Studio\\26.0.186-cloud.22084\\UiPath.Studio.CommandLine.exe\" pack -p \"D:\\UiPath\\UiPath_CICD_Integration\" -o \"C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\Output\""
+                    bat "\"C:\\Users\\Admin\\AppData\\Local\\Programs\\UiPathPlatform\\Studio\\26.0.186-cloud.22084\\UiPath.Studio.CommandLine.exe\" publish -p \"D:\\UiPath\\UiPath_CICD_Integration\" -g \"C:\\Users\\Admin\\Documents\\UiPath\\UiPath_CICD_Integration\\Output\""
 
                 }
             }
